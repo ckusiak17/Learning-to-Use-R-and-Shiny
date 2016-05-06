@@ -1,20 +1,35 @@
 require(lattice)
 require(latticeExtra)
 
-realconf <<- c(1, 1.5, 2)
+#below is the original functin which does not work
 graphing <- function(points, conf){
   cat("conf=", conf, "\n")
   a <- histogram(~points)
-  b <- layer(panel.abline(v = 2:4, lwd=3))
-  c <- layer(panel.abline(v=conf))
-  d <- layer(pabel.abline(v=realconf))
-  e <- a + c
-  return(e)
+  b <- layer(panel.abline(v=conf))
+  c <- a + b
+  return(c)
 }
 graphing(points=c(1,2,3,4,5,7,8,9), conf=c(2,4))
 
-x <- rnorm(100, 0, 10); myconf <- c(2, 4)
-a <- histogram(~x)
-c <- layer(panel.abline(v=myconf))
-d <- a + c
-d
+#however, the function does work if there is a main call from the environment
+graphing <- function(points, conf){
+  cat("conf=", conf, "\n")
+  a <- histogram(~points)
+  b <- layer(panel.abline(v=conf))
+  c <- layer(panel.abline(v=c(6,9)))
+  d <- a + c
+  return(d)
+}
+graphing(points=c(1,2,3,4,5,7,8,9), conf=c(2,4))
+
+
+#finally, the functino works if it accesses a globabl variable called realconf
+realconf <<- c(2,4)
+graphing <- function(points, conf){
+  cat("conf=", conf, "\n")
+  a <- histogram(~points)
+  b <- layer(panel.abline(v=realconf))
+  c <- a + b
+  return(c)
+}
+graphing(points=c(1,2,3,4,5,7,8,9), conf=c(2,4))
