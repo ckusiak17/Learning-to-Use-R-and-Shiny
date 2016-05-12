@@ -1,7 +1,10 @@
+# Nicholas Horton (nhorton@amherst.edu), Coco Kusiak
+# query about lattice environment
+# May 12, 2016
 require(lattice)
 require(latticeExtra)
 
-#below is the original functin which does not work
+#below is the original function which does not work
 graphing <- function(points, conf){
   cat("conf=", conf, "\n")
   a <- histogram(~points)
@@ -23,7 +26,7 @@ graphing <- function(points, conf){
 graphing(points=c(1,2,3,4,5,7,8,9), conf=c(2,4))
 
 
-#finally, the functino works if it accesses a globabl variable called realconf
+#finally, the function works if it accesses a global variable called realconf
 realconf <<- c(2,4)
 graphing <- function(points, conf){
   cat("conf=", conf, "\n")
